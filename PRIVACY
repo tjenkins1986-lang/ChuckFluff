@@ -1,0 +1,40 @@
+
+# Privacy Policy – Chuck Fluff
+
+*Last updated: March 2026*
+
+## Overview
+
+Chuck Fluff ("the app") is a personal fly fishing journal for iOS. This privacy policy explains how the app handles your data.
+
+## Data Collection
+
+Chuck Fluff does not collect, transmit, store remotely, or share any personal data. All information you enter into the app — including session details, catch records, photos, and location data — is stored exclusively on your device using Apple's SwiftData framework.
+
+## Permissions
+
+**Location**
+The app requests access to your device's location solely to allow you to pin fishing spots on an in-app map. Your location is never transmitted to any server or shared with any third party.
+
+**Photos**
+The app requests access to your photo library solely to allow you to attach images to fishing sessions. Photos are stored locally on your device only and are never transmitted or shared.
+
+## Third Party Services
+
+Chuck Fluff does not use any third party analytics, advertising, or data collection services.
+
+## Data Storage and Security
+
+All app data is stored locally on your device. We recommend enabling iCloud device backup to protect your data against device loss. No data is stored on external servers.
+
+## Children's Privacy
+
+Chuck Fluff does not knowingly collect any data from anyone, including children under the age of 13.
+
+## Changes to This Policy
+
+Any future changes to this privacy policy will be reflected in an updated version of this document at this URL.
+
+## Contact
+
+If you have any questions about this privacy policy please contact us at [your@email.com].
