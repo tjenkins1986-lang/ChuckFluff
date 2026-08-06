@@ -74,7 +74,7 @@ struct SessionCatchesSection: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Text(entry.species).bold()
-                            Text("Qty: \(entry.quantity) · \(String(format: "%.1f", entry.weightLb)) lb each")
+                            Text(catchSummary(for: entry))
                                 .font(.caption).foregroundColor(.secondary)
                             if !entry.method.isEmpty {
                                 Text("Method: \(entry.method)").font(.caption).foregroundColor(.secondary)
@@ -87,5 +87,13 @@ struct SessionCatchesSection: View {
                 }
             }
         }
+    }
+
+    private func catchSummary(for entry: CatchEntry) -> String {
+        var summary = "Qty: \(entry.quantity) · \(String(format: "%.1f", entry.weightLb)) lb each"
+        if entry.lengthInches != 0 {
+            summary += " · \(String(format: "%.1f", entry.lengthInches)) in"
+        }
+        return summary
     }
 }

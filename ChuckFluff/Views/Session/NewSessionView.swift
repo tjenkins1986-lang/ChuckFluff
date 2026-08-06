@@ -269,7 +269,7 @@ struct NewSessionView: View {
             rodUsed: rodUsed,
             reelUsed: reelUsed,
             catches: catches.map {
-                CatchEntry(species: $0.species, weightLb: $0.weightLb, quantity: $0.quantity, method: $0.method)
+                CatchEntry(species: $0.species, weightLb: $0.weightLb, quantity: $0.quantity, method: $0.method, lengthInches: $0.lengthInches)
             }
         )
         modelContext.insert(session)

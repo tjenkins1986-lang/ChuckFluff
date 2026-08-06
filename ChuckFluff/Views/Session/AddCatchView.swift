@@ -11,6 +11,7 @@ struct AddCatchView: View {
     @State private var quantity = 1
     @State private var stage: AddCatchStage = .selectSpecies
     @State private var weightStrings: [String] = []
+    @State private var lengthStrings: [String] = []
     @State private var methodStrings: [String] = []
 
     enum AddCatchStage {
@@ -58,6 +59,7 @@ struct AddCatchView: View {
                     if stage == .selectSpecies {
                         Button("Next") {
                             weightStrings = Array(repeating: "", count: quantity)
+                            lengthStrings = Array(repeating: "", count: quantity)
                             methodStrings = Array(repeating: "", count: quantity)
                             stage = .enterWeights
                         }
@@ -115,7 +117,7 @@ struct AddCatchView: View {
     var weightsView: some View {
         Form {
             Section(header: Text("Enter details for each \(effectiveSpecies)"),
-                    footer: Text("Weight in lb. Method is optional.")) {
+                    footer: Text("Weight in lb. Length and method are optional.")) {
                 ForEach(0..<quantity, id: \.self) { i in
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Fish \(i + 1)").bold()
@@ -133,6 +135,21 @@ struct AddCatchView: View {
                             .multilineTextAlignment(.trailing)
                             .frame(width: 80)
                             Text("lb").foregroundColor(.secondary)
+                        }
+                        HStack {
+                            Text("Length").foregroundColor(.secondary)
+                            Spacer()
+                            TextField("optional", text: Binding(
+                                get: { lengthStrings[i] },
+                                set: { newValue in
+                                    let filtered = newValue.filter { $0.isNumber || $0 == "." }
+                                    lengthStrings[i] = filtered
+                                }
+                            ))
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 80)
+                            Text("in").foregroundColor(.secondary)
                         }
                         HStack {
                             Text("Method").foregroundColor(.secondary)
@@ -172,11 +189,13 @@ struct AddCatchView: View {
     func saveCatches() {
         for i in 0..<quantity {
             let weight = Double(weightStrings[i]) ?? 0
+            let length = Double(lengthStrings[i]) ?? 0
             catches.append(DraftCatch(
                 species: effectiveSpecies,
                 weightLb: weight,
                 quantity: 1,
-                method: methodStrings[i]
+                method: methodStrings[i],
+                lengthInches: length
             ))
         }
         dismiss()
