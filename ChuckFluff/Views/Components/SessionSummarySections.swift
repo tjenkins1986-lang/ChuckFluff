@@ -39,6 +39,12 @@ struct SessionConditionsSection: View {
             if !session.windDirection.isEmpty {
                 LabeledContent("Wind Direction", value: session.windDirection)
             }
+            if session.gaugeHeight != 0 {
+                LabeledContent("Gauge Height", value: String(format: "%.2f ft", session.gaugeHeight))
+            }
+            if session.cubicFeetPerSecond != 0 {
+                LabeledContent("Flow", value: String(format: "%.1f cfs", session.cubicFeetPerSecond))
+            }
         }
     }
 }

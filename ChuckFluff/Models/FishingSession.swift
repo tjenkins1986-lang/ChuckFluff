@@ -14,6 +14,9 @@ class FishingSession {
     var waterTemperatureCelsius: Double
     var windSpeed: Double
     var windDirection: String
+    // 0 = not recorded, for both.
+    var gaugeHeight: Double
+    var cubicFeetPerSecond: Double
     var startTime: Date
     var endTime: Date
     var duration: Double
@@ -33,6 +36,8 @@ class FishingSession {
          waterTemperatureCelsius: Double = 999,
          windSpeed: Double = 0,
          windDirection: String = "",
+         gaugeHeight: Double = 0,
+         cubicFeetPerSecond: Double = 0,
          startTime: Date = Calendar.current.date(bySettingHour: 6, minute: 0, second: 0, of: Date()) ?? Date(),
          endTime: Date = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date()) ?? Date(),
          duration: Double = 0,
@@ -51,6 +56,8 @@ class FishingSession {
         self.waterTemperatureCelsius = waterTemperatureCelsius
         self.windSpeed = windSpeed
         self.windDirection = windDirection
+        self.gaugeHeight = gaugeHeight
+        self.cubicFeetPerSecond = cubicFeetPerSecond
         self.startTime = startTime
         self.endTime = endTime
         self.duration = duration

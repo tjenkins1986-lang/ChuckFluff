@@ -18,6 +18,8 @@ struct EditSessionView: View {
     @State private var showWaterTempPicker = false
     @State private var windSpeed: String
     @State private var windDirection: String
+    @State private var gaugeHeight: String
+    @State private var cubicFeetPerSecond: String
     @State private var startTime: Date
     @State private var endTime: Date
     @State private var notes: String
@@ -34,7 +36,7 @@ struct EditSessionView: View {
     @FocusState private var focusedField: EditField?
 
     enum EditField {
-        case sessionName, locationName, windSpeed
+        case sessionName, locationName, windSpeed, gaugeHeight, cubicFeetPerSecond
     }
 
     var config: UserConfig? { configs.first }
@@ -59,6 +61,8 @@ struct EditSessionView: View {
         _waterTemperatureCelsius = State(initialValue: session.waterTemperatureCelsius)
         _windSpeed = State(initialValue: session.windSpeed == 0 ? "" : String(session.windSpeed))
         _windDirection = State(initialValue: session.windDirection)
+        _gaugeHeight = State(initialValue: session.gaugeHeight == 0 ? "" : String(session.gaugeHeight))
+        _cubicFeetPerSecond = State(initialValue: session.cubicFeetPerSecond == 0 ? "" : String(session.cubicFeetPerSecond))
         _startTime = State(initialValue: session.startTime)
         _endTime = State(initialValue: session.endTime)
         _notes = State(initialValue: session.notes)
@@ -138,6 +142,10 @@ struct EditSessionView: View {
                 windSpeedRow
                 Divider()
                 WindDirectionPickerRow(windDirection: $windDirection)
+                Divider()
+                gaugeHeightRow
+                Divider()
+                flowRow
             }
             .padding(.top, 8)
         }
@@ -155,6 +163,34 @@ struct EditSessionView: View {
                 .focused($focusedField, equals: .windSpeed)
                 .textFieldStyle(.roundedBorder)
                 .onTapGesture { focusedField = .windSpeed }
+        }
+    }
+
+    var gaugeHeightRow: some View {
+        HStack {
+            Text("Gauge Height (ft)")
+            Spacer()
+            TextField("optional", text: $gaugeHeight)
+                .keyboardType(.decimalPad)
+                .multilineTextAlignment(.trailing)
+                .frame(width: 100)
+                .focused($focusedField, equals: .gaugeHeight)
+                .textFieldStyle(.roundedBorder)
+                .onTapGesture { focusedField = .gaugeHeight }
+        }
+    }
+
+    var flowRow: some View {
+        HStack {
+            Text("Flow (cfs)")
+            Spacer()
+            TextField("optional", text: $cubicFeetPerSecond)
+                .keyboardType(.decimalPad)
+                .multilineTextAlignment(.trailing)
+                .frame(width: 100)
+                .focused($focusedField, equals: .cubicFeetPerSecond)
+                .textFieldStyle(.roundedBorder)
+                .onTapGesture { focusedField = .cubicFeetPerSecond }
         }
     }
 
@@ -215,6 +251,8 @@ struct EditSessionView: View {
         session.waterTemperatureCelsius = waterTemperatureCelsius
         session.windSpeed = Double(windSpeed) ?? 0
         session.windDirection = windDirection
+        session.gaugeHeight = Double(gaugeHeight) ?? 0
+        session.cubicFeetPerSecond = Double(cubicFeetPerSecond) ?? 0
         session.startTime = startTime
         session.endTime = endTime
         session.duration = calculatedDuration

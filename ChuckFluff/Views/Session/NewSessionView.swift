@@ -20,6 +20,10 @@ struct NewSessionView: View {
     @State private var showWindSpeedSheet = false
     @State private var windSpeed = ""
     @State private var windDirection = ""
+    @State private var showGaugeHeightSheet = false
+    @State private var gaugeHeight = ""
+    @State private var showFlowSheet = false
+    @State private var cubicFeetPerSecond = ""
     @State private var startTime: Date = Calendar.current.date(bySettingHour: 6, minute: 0, second: 0, of: Date()) ?? Date()
     @State private var endTime: Date = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date()) ?? Date()
     @State private var notes = ""
@@ -145,6 +149,10 @@ struct NewSessionView: View {
                 windSpeedRow
                 Divider()
                 WindDirectionPickerRow(windDirection: $windDirection)
+                Divider()
+                gaugeHeightRow
+                Divider()
+                flowRow
             }
             .padding(.top, 8)
         }
@@ -158,6 +166,32 @@ struct NewSessionView: View {
                 Spacer()
                 Text(windSpeed.isEmpty ? "optional" : windSpeed)
                     .foregroundColor(windSpeed.isEmpty ? .secondary : .primary)
+                Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
+            }
+        }
+        .buttonStyle(.plain)
+    }
+
+    var gaugeHeightRow: some View {
+        Button(action: { showGaugeHeightSheet = true }) {
+            HStack {
+                Text("Gauge Height (ft)").foregroundColor(.primary)
+                Spacer()
+                Text(gaugeHeight.isEmpty ? "optional" : gaugeHeight)
+                    .foregroundColor(gaugeHeight.isEmpty ? .secondary : .primary)
+                Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
+            }
+        }
+        .buttonStyle(.plain)
+    }
+
+    var flowRow: some View {
+        Button(action: { showFlowSheet = true }) {
+            HStack {
+                Text("Flow (cfs)").foregroundColor(.primary)
+                Spacer()
+                Text(cubicFeetPerSecond.isEmpty ? "optional" : cubicFeetPerSecond)
+                    .foregroundColor(cubicFeetPerSecond.isEmpty ? .secondary : .primary)
                 Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
             }
         }
@@ -224,6 +258,26 @@ struct NewSessionView: View {
                 }
                 .presentationDetents([.height(200)])
             }
+            .sheet(isPresented: $showGaugeHeightSheet) {
+                AddItemSheet(
+                    title: "Gauge Height (ft)",
+                    placeholder: "e.g. 3.2",
+                    isPresented: $showGaugeHeightSheet
+                ) { value in
+                    gaugeHeight = value
+                }
+                .presentationDetents([.height(200)])
+            }
+            .sheet(isPresented: $showFlowSheet) {
+                AddItemSheet(
+                    title: "Flow (cfs)",
+                    placeholder: "e.g. 450",
+                    isPresented: $showFlowSheet
+                ) { value in
+                    cubicFeetPerSecond = value
+                }
+                .presentationDetents([.height(200)])
+            }
             .sheet(isPresented: $showTempPicker) {
                 TemperaturePickerView(title: "Air Temperature", temperatureCelsius: $temperatureCelsius)
                     .presentationDetents([.medium])
@@ -261,6 +315,8 @@ struct NewSessionView: View {
             waterTemperatureCelsius: waterTemperatureCelsius,
             windSpeed: Double(windSpeed) ?? 0,
             windDirection: windDirection,
+            gaugeHeight: Double(gaugeHeight) ?? 0,
+            cubicFeetPerSecond: Double(cubicFeetPerSecond) ?? 0,
             startTime: startTime,
             endTime: endTime,
             duration: calculatedDuration,
@@ -284,6 +340,8 @@ struct NewSessionView: View {
         waterTemperatureCelsius = 999
         windSpeed = ""
         windDirection = ""
+        gaugeHeight = ""
+        cubicFeetPerSecond = ""
         startTime = Calendar.current.date(bySettingHour: 6, minute: 0, second: 0, of: Date()) ?? Date()
         endTime = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date()) ?? Date()
         notes = ""
