@@ -43,11 +43,21 @@ struct DashboardView: View {
             }
     }
 
-    func personalBest(for species: String) -> Double? {
+    func personalBestWeight(for species: String) -> Double? {
         var best: Double? = nil
         for session in sessions {
-            for catch_ in session.catches where catch_.species == species {
+            for catch_ in session.catches where catch_.species == species && catch_.weightLb > 0 {
                 if best == nil || catch_.weightLb > best! { best = catch_.weightLb }
+            }
+        }
+        return best
+    }
+
+    func personalBestLength(for species: String) -> Double? {
+        var best: Double? = nil
+        for session in sessions {
+            for catch_ in session.catches where catch_.species == species && catch_.lengthInches > 0 {
+                if best == nil || catch_.lengthInches > best! { best = catch_.lengthInches }
             }
         }
         return best
@@ -154,8 +164,8 @@ struct DashboardView: View {
                     HStack {
                         Text(species).font(.subheadline)
                         Spacer()
-                        if let best = personalBest(for: species) {
-                            Text(String(format: "%.1f lb", best))
+                        if let recordText = recordText(for: species) {
+                            Text(recordText)
                                 .font(.subheadline).foregroundColor(.blue)
                         } else {
                             Text("No record yet")
@@ -173,6 +183,22 @@ struct DashboardView: View {
             .cornerRadius(12)
             .shadow(color: .black.opacity(0.05), radius: 4)
             .padding(.horizontal)
+        }
+    }
+
+    /// Combines the species' personal-best weight and/or length, whichever were recorded.
+    func recordText(for species: String) -> String? {
+        let weight = personalBestWeight(for: species)
+        let length = personalBestLength(for: species)
+        switch (weight, length) {
+        case let (w?, l?):
+            return String(format: "%.1f lb · %.1f in", w, l)
+        case let (w?, nil):
+            return String(format: "%.1f lb", w)
+        case let (nil, l?):
+            return String(format: "%.1f in", l)
+        case (nil, nil):
+            return nil
         }
     }
 

@@ -63,7 +63,7 @@ struct EditSessionView: View {
         _endTime = State(initialValue: session.endTime)
         _notes = State(initialValue: session.notes)
         _catches = State(initialValue: session.catches.map {
-            DraftCatch(species: $0.species, weightLb: $0.weightLb, quantity: $0.quantity, method: $0.method)
+            DraftCatch(species: $0.species, weightLb: $0.weightLb, quantity: $0.quantity, method: $0.method, lengthInches: $0.lengthInches)
         })
         _photoData = State(initialValue: session.photoData)
         _rodUsed = State(initialValue: session.rodUsed)
@@ -224,7 +224,7 @@ struct EditSessionView: View {
         session.reelUsed = reelUsed
         for entry in session.catches { modelContext.delete(entry) }
         session.catches = catches.map {
-            CatchEntry(species: $0.species, weightLb: $0.weightLb, quantity: $0.quantity, method: $0.method)
+            CatchEntry(species: $0.species, weightLb: $0.weightLb, quantity: $0.quantity, method: $0.method, lengthInches: $0.lengthInches)
         }
         dismiss()
     }

@@ -20,7 +20,7 @@ struct CatchesListBox: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(catches[i].species).bold()
-                                Text("\(catches[i].quantity) fish · \(catches[i].weightLb, specifier: "%.1f") lb each")
+                                Text(catchSummary(for: catches[i]))
                                     .font(.caption).foregroundColor(.secondary)
                                 if !catches[i].method.isEmpty {
                                     Text("Method: \(catches[i].method)")
@@ -50,5 +50,13 @@ struct CatchesListBox: View {
             .padding(.top, 8)
         }
         .formBoxPadding()
+    }
+
+    private func catchSummary(for catch_: DraftCatch) -> String {
+        var summary = "\(catch_.quantity) fish · \(String(format: "%.1f", catch_.weightLb)) lb each"
+        if catch_.lengthInches != 0 {
+            summary += " · \(String(format: "%.1f", catch_.lengthInches)) in"
+        }
+        return summary
     }
 }

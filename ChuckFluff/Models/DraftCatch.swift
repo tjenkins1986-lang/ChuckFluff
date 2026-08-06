@@ -7,4 +7,6 @@ struct DraftCatch {
     var weightLb: Double
     var quantity: Int
     var method: String
+    // 0 = not recorded.
+    var lengthInches: Double = 0
 }
