@@ -104,6 +104,7 @@ struct AddCatchView: View {
                 Section("Species Name") {
                     TextField("Enter species name", text: $customSpecies)
                         .autocorrectionDisabled()
+                        .onTapGesture { }
                 }
             }
             Section("Number of Fish") {
@@ -132,6 +133,7 @@ struct AddCatchView: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .frame(width: 80)
+                            .onTapGesture { }
                             Text("lb").foregroundColor(.secondary)
                         }
                         HStack {
@@ -143,6 +145,7 @@ struct AddCatchView: View {
                             ))
                             .multilineTextAlignment(.trailing)
                             .frame(width: 200)
+                            .onTapGesture { }
                         }
                     }
                     .padding(.vertical, 4)
