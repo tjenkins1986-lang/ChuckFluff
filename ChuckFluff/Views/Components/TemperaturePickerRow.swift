@@ -15,10 +15,10 @@ struct TemperaturePickerRow: View {
     var body: some View {
         Button(action: onTap) {
             HStack {
-                Text(title).foregroundColor(.primary)
+                Text(title).foregroundColor(.ledgerTextHi)
                 Spacer()
-                Text(display).foregroundColor(isSet ? .primary : .secondary)
-                Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
+                Text(display).foregroundColor(isSet ? .ledgerTextHi : .ledgerTextLow)
+                Image(systemName: "chevron.right").foregroundColor(.ledgerTextLow).font(.caption)
             }
         }
         .buttonStyle(.plain)

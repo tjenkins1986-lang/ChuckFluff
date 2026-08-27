@@ -39,8 +39,8 @@ struct SessionMapView: View {
     func annotationButton(for session: FishingSession) -> some View {
         Button(action: { selectedSession = session }) {
             ZStack {
-                Circle().fill(.blue).frame(width: 36, height: 36)
-                Image(systemName: "fish.fill").foregroundColor(.white).font(.system(size: 16))
+                Circle().fill(Color.ledgerBrass).frame(width: 36, height: 36)
+                Image(systemName: "fish.fill").foregroundColor(.ledgerInk).font(.system(size: 16))
             }
         }
     }

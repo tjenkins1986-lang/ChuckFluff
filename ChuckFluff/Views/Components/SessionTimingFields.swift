@@ -24,16 +24,16 @@ struct SessionTimingFields: View {
                 Text("Duration")
                 Spacer()
                 Text(String(format: "%.1f hrs", duration))
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.ledgerTextMid)
             }
             if isNextDay {
                 HStack(spacing: 6) {
                     Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.ledgerClay)
                         .font(.caption)
                     Text("Looks like you fished past midnight — we've assumed the end time is the following day. Please check these details are correct.")
                         .font(.caption)
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.ledgerClay)
                 }
                 .padding(.top, 2)
             }

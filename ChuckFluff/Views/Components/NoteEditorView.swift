@@ -11,9 +11,12 @@ struct NoteEditorView: View {
             VStack(spacing: 0) {
                 TextEditor(text: $draftNote)
                     .focused($isFocused)
+                    .foregroundColor(.ledgerTextHi)
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .ledgerScreenBackground()
+            .scrollContentBackground(.hidden)
             .navigationTitle("Note")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

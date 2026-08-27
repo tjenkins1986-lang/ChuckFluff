@@ -11,8 +11,8 @@ struct NotesBox: View {
                 if notes.isEmpty {
                     Button(action: { showNoteSheet = true }) {
                         HStack {
-                            Image(systemName: "plus.circle.fill").foregroundColor(.blue)
-                            Text("Add Note").foregroundColor(.blue)
+                            Image(systemName: "plus.circle.fill").foregroundColor(.ledgerBrass)
+                            Text("Add Note").foregroundColor(.ledgerBrass)
                             Spacer()
                         }
                     }
@@ -21,20 +21,20 @@ struct NotesBox: View {
                 } else {
                     Text(notes)
                         .font(.body)
-                        .foregroundColor(.primary)
+                        .foregroundColor(.ledgerTextHi)
                         .fixedSize(horizontal: false, vertical: true)
                     HStack {
                         Button(action: { showNoteSheet = true }) {
                             Label("Edit", systemImage: "pencil").font(.caption)
                         }
                         .buttonStyle(.plain)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.ledgerBrass)
                         Spacer()
                         Button(action: { notes = "" }) {
                             Label("Delete", systemImage: "trash").font(.caption)
                         }
                         .buttonStyle(.plain)
-                        .foregroundColor(.red)
+                        .foregroundColor(.ledgerClay)
                     }
                     .padding(.top, 4)
                 }

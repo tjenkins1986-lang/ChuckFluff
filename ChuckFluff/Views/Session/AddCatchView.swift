@@ -47,6 +47,8 @@ struct AddCatchView: View {
                     weightsView
                 }
             }
+            .scrollContentBackground(.hidden)
+            .ledgerScreenBackground()
             .navigationTitle(stage == .selectSpecies ? "Add Catch" : effectiveSpecies)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -81,9 +83,9 @@ struct AddCatchView: View {
                         Text("")) {
                 if configs.first?.speciesList.isEmpty != false {
                     HStack(spacing: 8) {
-                        Image(systemName: "info.circle").foregroundColor(.blue)
+                        Image(systemName: "info.circle").foregroundColor(.ledgerBrass)
                         Text("Add your target species in the Settings & Help tab first.")
-                            .foregroundColor(.secondary).font(.subheadline)
+                            .foregroundColor(.ledgerTextMid).font(.subheadline)
                     }
                     .padding(.vertical, 4)
                 }
@@ -93,10 +95,10 @@ struct AddCatchView: View {
                         if s != "Other" { customSpecies = "" }
                     }) {
                         HStack {
-                            Text(s).foregroundColor(.primary)
+                            Text(s).foregroundColor(.ledgerTextHi)
                             Spacer()
                             if species == s {
-                                Image(systemName: "checkmark.circle.fill").foregroundColor(.blue)
+                                Image(systemName: "checkmark.circle.fill").foregroundColor(.ledgerBrass)
                             }
                         }
                     }
@@ -123,7 +125,7 @@ struct AddCatchView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Fish \(i + 1)").bold()
                         HStack {
-                            Text("Weight").foregroundColor(.secondary)
+                            Text("Weight").foregroundColor(.ledgerTextMid)
                             Spacer()
                             TextField("0.0", text: Binding(
                                 get: { weightStrings[i] },
@@ -136,10 +138,10 @@ struct AddCatchView: View {
                             .multilineTextAlignment(.trailing)
                             .frame(width: 80)
                             .onTapGesture { }
-                            Text("lb").foregroundColor(.secondary)
+                            Text("lb").foregroundColor(.ledgerTextMid)
                         }
                         HStack {
-                            Text("Length").foregroundColor(.secondary)
+                            Text("Length").foregroundColor(.ledgerTextMid)
                             Spacer()
                             TextField("optional", text: Binding(
                                 get: { lengthStrings[i] },
@@ -152,10 +154,10 @@ struct AddCatchView: View {
                             .multilineTextAlignment(.trailing)
                             .frame(width: 80)
                             .onTapGesture { }
-                            Text("in").foregroundColor(.secondary)
+                            Text("in").foregroundColor(.ledgerTextMid)
                         }
                         HStack {
-                            Text("Method").foregroundColor(.secondary)
+                            Text("Method").foregroundColor(.ledgerTextMid)
                             Spacer()
                             TextField("e.g. Dry fly, Nymph, Spinner", text: Binding(
                                 get: { methodStrings[i] },
@@ -173,18 +175,18 @@ struct AddCatchView: View {
                 HStack {
                     Text("Species")
                     Spacer()
-                    Text(effectiveSpecies).foregroundColor(.secondary)
+                    Text(effectiveSpecies).foregroundColor(.ledgerTextMid)
                 }
                 HStack {
                     Text("Total Fish")
                     Spacer()
-                    Text("\(quantity)").foregroundColor(.secondary)
+                    Text("\(quantity)").foregroundColor(.ledgerTextMid)
                 }
                 HStack {
                     Text("Total Weight")
                     Spacer()
                     let total = weightStrings.compactMap { Double($0) }.reduce(0, +)
-                    Text(String(format: "%.1f lb", total)).foregroundColor(.secondary)
+                    Text(String(format: "%.1f lb", total)).foregroundColor(.ledgerTextMid)
                 }
             }
         }

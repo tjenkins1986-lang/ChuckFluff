@@ -96,8 +96,16 @@ struct SettingsHelpView: View {
         }
     }
 
+    private func ledgerHeader(_ title: String) -> some View {
+        Text(title)
+            .font(.ledgerMono(10.5, weight: .medium))
+            .tracking(1.2)
+            .textCase(.uppercase)
+            .foregroundColor(.ledgerTextLow)
+    }
+
     var howToSection: some View {
-        Section(header: Text("How To")) {
+        Section(header: ledgerHeader("How To")) {
             ForEach(howToItems, id: \.title) { item in
                 VStack(alignment: .leading, spacing: 0) {
                     Button(action: {
@@ -107,11 +115,11 @@ struct SettingsHelpView: View {
                     }) {
                         HStack {
                             Text(item.title)
-                                .foregroundColor(.primary)
+                                .foregroundColor(.ledgerTextHi)
                                 .multilineTextAlignment(.leading)
                             Spacer()
                             Image(systemName: expandedHowTo == item.title ? "chevron.up" : "chevron.down")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.ledgerTextLow)
                                 .font(.caption)
                         }
                         .padding(.vertical, 4)
@@ -121,7 +129,7 @@ struct SettingsHelpView: View {
                     if expandedHowTo == item.title {
                         Text(item.body)
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.ledgerTextMid)
                             .padding(.top, 8)
                             .padding(.bottom, 4)
                             .fixedSize(horizontal: false, vertical: true)
@@ -129,17 +137,18 @@ struct SettingsHelpView: View {
                 }
             }
         }
+        .listRowBackground(Color.ledgerInkSurface)
     }
 
     var privacySection: some View {
-        Section(header: Text("Privacy")) {
+        Section(header: ledgerHeader("Privacy")) {
             Button(action: { withAnimation { showPrivacy.toggle() } }) {
                 HStack {
                     Text("Privacy Policy")
-                        .foregroundColor(.primary)
+                        .foregroundColor(.ledgerTextHi)
                     Spacer()
                     Image(systemName: showPrivacy ? "chevron.up" : "chevron.down")
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.ledgerTextLow)
                         .font(.caption)
                 }
                 .padding(.vertical, 4)
@@ -149,12 +158,13 @@ struct SettingsHelpView: View {
             if showPrivacy {
                 Text(privacyPolicyText)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.ledgerTextMid)
                     .padding(.top, 8)
                     .padding(.bottom, 4)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
+        .listRowBackground(Color.ledgerInkSurface)
     }
 
     var body: some View {
@@ -164,6 +174,8 @@ struct SettingsHelpView: View {
                 howToSection
                 privacySection
             }
+            .scrollContentBackground(.hidden)
+            .ledgerScreenBackground()
             .navigationTitle("Settings & Help")
             .onAppear { ensureConfig() }
             .sheet(isPresented: $showAddSpecies) {

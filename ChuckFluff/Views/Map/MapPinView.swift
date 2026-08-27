@@ -26,7 +26,7 @@ struct MapPinView: View {
                 Map(position: $position) {
                     UserAnnotation()
                     if let pin = pinLocation {
-                        Marker("Your spot", coordinate: pin).tint(.red)
+                        Marker("Your spot", coordinate: pin).tint(Color.ledgerBrass)
                     }
                 }
                 .ignoresSafeArea()
@@ -45,7 +45,7 @@ struct MapPinView: View {
 
                 Image(systemName: "plus.circle")
                     .font(.title)
-                    .foregroundColor(.red)
+                    .foregroundColor(.ledgerBrass)
                     .shadow(radius: 3)
                     .allowsHitTesting(false)
 
