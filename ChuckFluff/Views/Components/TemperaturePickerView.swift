@@ -26,6 +26,7 @@ struct TemperaturePickerView: View {
                 Spacer()
             }
             .padding(.top, 24)
+            .ledgerScreenBackground()
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -34,7 +35,7 @@ struct TemperaturePickerView: View {
                         temperatureCelsius = 999
                         dismiss()
                     }
-                    .foregroundColor(.red)
+                    .foregroundColor(.ledgerClay)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {

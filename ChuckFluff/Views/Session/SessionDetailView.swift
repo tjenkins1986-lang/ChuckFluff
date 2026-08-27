@@ -18,7 +18,7 @@ struct SessionDetailView: View {
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 120, height: 120)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .clipShape(RoundedRectangle(cornerRadius: LedgerMetric.radiusCard))
                                         .onTapGesture { selectedPhotoIndex = i }
                                 }
                             }
@@ -26,6 +26,7 @@ struct SessionDetailView: View {
                         .padding(.vertical, 4)
                     }
                 }
+                .listRowBackground(Color.ledgerInkSurface)
             }
         }
     }
@@ -39,7 +40,12 @@ struct SessionDetailView: View {
     var body: some View {
         Form {
             if !session.sessionName.isEmpty {
-                Section { Text(session.sessionName).font(.headline) }
+                Section {
+                    Text(session.sessionName)
+                        .font(.ledgerDisplay(22))
+                        .foregroundColor(.ledgerTextHi)
+                }
+                .listRowBackground(Color.ledgerInkSurface)
             }
             photosSection
             SessionDetailsSection(session: session)
@@ -47,9 +53,12 @@ struct SessionDetailView: View {
             SessionGearSection(session: session)
             SessionCatchesSection(session: session)
             if !session.notes.isEmpty {
-                Section("Notes") { Text(session.notes) }
+                Section("Notes") { Text(session.notes).foregroundColor(.ledgerTextMid) }
+                    .listRowBackground(Color.ledgerInkSurface)
             }
         }
+        .scrollContentBackground(.hidden)
+        .ledgerScreenBackground()
         .navigationTitle(navTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

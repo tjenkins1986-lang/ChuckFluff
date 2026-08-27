@@ -58,13 +58,13 @@ struct NewSessionView: View {
                 Button(action: { showNameSheet = true }) {
                     HStack {
                         Text("Session Name")
-                            .foregroundColor(.primary)
+                            .foregroundColor(.ledgerTextHi)
                         Spacer()
                         Text(sessionName.isEmpty ? "optional" : sessionName)
-                            .foregroundColor(sessionName.isEmpty ? .secondary : .primary)
+                            .foregroundColor(sessionName.isEmpty ? .ledgerTextLow : .ledgerTextHi)
                             .lineLimit(1)
                         Image(systemName: "chevron.right")
-                            .foregroundColor(.secondary).font(.caption)
+                            .foregroundColor(.ledgerTextLow).font(.caption)
                     }
                 }
                 .buttonStyle(.plain)
@@ -82,48 +82,51 @@ struct NewSessionView: View {
                 Button(action: { showLocationSheet = true }) {
                     HStack {
                         Text("Location Name")
-                            .foregroundColor(.primary)
+                            .foregroundColor(.ledgerTextHi)
                         Spacer()
                         Text(locationName.isEmpty ? "required" : locationName)
-                            .foregroundColor(locationName.isEmpty ? .secondary : .primary)
+                            .foregroundColor(locationName.isEmpty ? .ledgerTextLow : .ledgerTextHi)
                             .lineLimit(1)
                         Image(systemName: "chevron.right")
-                            .foregroundColor(.secondary).font(.caption)
+                            .foregroundColor(.ledgerTextLow).font(.caption)
                     }
                 }
                 .buttonStyle(.plain)
 
                 Button(action: { showMap = true }) {
                     HStack {
-                        Image(systemName: "map.fill").foregroundColor(.blue)
+                        Image(systemName: "map.fill").foregroundColor(.ledgerBrass)
                         Text(pinnedLatitude != nil ? "Pin set ✓ — tap to change" : "Drop a pin on the map")
+                            .foregroundColor(pinnedLatitude != nil ? .ledgerSage : .ledgerTextHi)
                         Spacer()
-                        Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
+                        Image(systemName: "chevron.right").foregroundColor(.ledgerTextLow).font(.caption)
                     }
                 }
                 .buttonStyle(.plain)
                 .padding(10)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
+                .background(Color.ledgerInkRaised)
+                .cornerRadius(LedgerMetric.radiusCard)
 
                 Button(action: useGPS) {
                     HStack {
-                        Image(systemName: "location.fill").foregroundColor(.blue)
+                        Image(systemName: "location.fill").foregroundColor(.ledgerBrass)
                         Text("Use my current location")
+                            .foregroundColor(.ledgerTextHi)
                         Spacer()
-                        Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
+                        Image(systemName: "chevron.right").foregroundColor(.ledgerTextLow).font(.caption)
                     }
                 }
                 .buttonStyle(.plain)
                 .padding(10)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
+                .background(Color.ledgerInkRaised)
+                .cornerRadius(LedgerMetric.radiusCard)
 
                 if let lat = pinnedLatitude, let lon = pinnedLongitude {
                     HStack {
-                        Image(systemName: "mappin.circle.fill").foregroundColor(.red)
+                        Image(systemName: "mappin.circle.fill").foregroundColor(.ledgerBrass)
                         Text("📍 \(lat, specifier: "%.4f"), \(lon, specifier: "%.4f")")
-                            .font(.caption).foregroundColor(.secondary)
+                            .font(.ledgerMono(12))
+                            .foregroundColor(.ledgerTextMid)
                         Spacer()
                     }
                 }
@@ -162,11 +165,11 @@ struct NewSessionView: View {
     var windSpeedRow: some View {
         Button(action: { showWindSpeedSheet = true }) {
             HStack {
-                Text("Wind Speed (mph)").foregroundColor(.primary)
+                Text("Wind Speed (mph)").foregroundColor(.ledgerTextHi)
                 Spacer()
                 Text(windSpeed.isEmpty ? "optional" : windSpeed)
-                    .foregroundColor(windSpeed.isEmpty ? .secondary : .primary)
-                Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
+                    .foregroundColor(windSpeed.isEmpty ? .ledgerTextLow : .ledgerTextHi)
+                Image(systemName: "chevron.right").foregroundColor(.ledgerTextLow).font(.caption)
             }
         }
         .buttonStyle(.plain)
@@ -175,11 +178,11 @@ struct NewSessionView: View {
     var gaugeHeightRow: some View {
         Button(action: { showGaugeHeightSheet = true }) {
             HStack {
-                Text("Gauge Height (ft)").foregroundColor(.primary)
+                Text("Gauge Height (ft)").foregroundColor(.ledgerTextHi)
                 Spacer()
                 Text(gaugeHeight.isEmpty ? "optional" : gaugeHeight)
-                    .foregroundColor(gaugeHeight.isEmpty ? .secondary : .primary)
-                Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
+                    .foregroundColor(gaugeHeight.isEmpty ? .ledgerTextLow : .ledgerTextHi)
+                Image(systemName: "chevron.right").foregroundColor(.ledgerTextLow).font(.caption)
             }
         }
         .buttonStyle(.plain)
@@ -188,11 +191,11 @@ struct NewSessionView: View {
     var flowRow: some View {
         Button(action: { showFlowSheet = true }) {
             HStack {
-                Text("Flow (cfs)").foregroundColor(.primary)
+                Text("Flow (cfs)").foregroundColor(.ledgerTextHi)
                 Spacer()
                 Text(cubicFeetPerSecond.isEmpty ? "optional" : cubicFeetPerSecond)
-                    .foregroundColor(cubicFeetPerSecond.isEmpty ? .secondary : .primary)
-                Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
+                    .foregroundColor(cubicFeetPerSecond.isEmpty ? .ledgerTextLow : .ledgerTextHi)
+                Image(systemName: "chevron.right").foregroundColor(.ledgerTextLow).font(.caption)
             }
         }
         .buttonStyle(.plain)
@@ -212,6 +215,7 @@ struct NewSessionView: View {
                     NotesBox(notes: $notes, showNoteSheet: $showNoteSheet)
                 }
             }
+            .ledgerScreenBackground()
             .navigationTitle("New Session")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {

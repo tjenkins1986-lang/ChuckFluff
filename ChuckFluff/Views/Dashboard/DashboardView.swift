@@ -80,35 +80,40 @@ struct DashboardView: View {
             GridItem(.flexible()), GridItem(.flexible()),
             GridItem(.flexible()), GridItem(.flexible())
         ], spacing: 12) {
-            StatCardView(title: "Sessions", value: "\(sessions.count)", icon: "calendar", color: .blue)
-            StatCardView(title: "Total Fish", value: "\(totalFish)", icon: "fish.fill", color: .green)
-            StatCardView(title: "Total Weight", value: String(format: "%.1f lb", totalWeight), icon: "scalemass.fill", color: .orange)
-            StatCardView(title: "Best Session", value: bestSession != nil ? "\(bestSession!.totalFish) fish" : "–", icon: "star.fill", color: .yellow)
+            StatCardView(title: "Sessions", value: "\(sessions.count)", icon: "calendar")
+            StatCardView(title: "Total Fish", value: "\(totalFish)", icon: "fish.fill")
+            StatCardView(title: "Total Weight", value: String(format: "%.1f lb", totalWeight), icon: "scalemass.fill")
+            StatCardView(title: "Best Session", value: bestSession != nil ? "\(bestSession!.totalFish) fish" : "–", icon: "star.fill")
         }
         .padding(.horizontal)
     }
+
+    private var sectionLabelFont: Font { .ledgerMono(10.5, weight: .medium) }
 
     var monthlyChart: some View {
         let maxCount = monthlyData.map { $0.count }.max() ?? 1
         let chartHeight: CGFloat = 120
         return VStack(alignment: .leading, spacing: 8) {
-            Text("Catches Over Time").font(.headline).padding(.horizontal)
+            Text("Catches Over Time")
+                .font(sectionLabelFont).tracking(1.2).textCase(.uppercase)
+                .foregroundColor(.ledgerTextLow)
+                .padding(.horizontal)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .bottom, spacing: 8) {
                     ForEach(monthlyData, id: \.month) { item in
                         VStack(spacing: 4) {
                             Text("\(item.count)")
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(Color.blue)
+                                .font(.ledgerMono(11))
+                                .foregroundColor(.ledgerTextMid)
+                            RoundedRectangle(cornerRadius: LedgerMetric.radiusDot)
+                                .fill(Color.ledgerBrass)
                                 .frame(
                                     width: 44,
                                     height: max(8, chartHeight * CGFloat(item.count) / CGFloat(maxCount))
                                 )
                             Text(item.month)
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
+                                .font(.ledgerMono(10))
+                                .foregroundColor(.ledgerTextLow)
                                 .fixedSize()
                         }
                     }
@@ -116,72 +121,74 @@ struct DashboardView: View {
                 .padding(.horizontal)
                 .frame(height: 160)
             }
-            .background(Color(.systemBackground))
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.05), radius: 4)
+            .padding(.vertical, 4)
+            .ledgerTile()
             .padding(.horizontal)
         }
     }
 
     var speciesChart: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Species Breakdown").font(.headline).padding(.horizontal)
+            Text("Species Breakdown")
+                .font(sectionLabelFont).tracking(1.2).textCase(.uppercase)
+                .foregroundColor(.ledgerTextLow)
+                .padding(.horizontal)
             VStack(spacing: 8) {
                 ForEach(speciesData, id: \.species) { item in
                     let maxCount = speciesData.first?.count ?? 1
                     HStack {
-                        Text(item.species).font(.subheadline).frame(width: 140, alignment: .leading)
+                        Text(item.species).font(.subheadline).foregroundColor(.ledgerTextHi)
+                            .frame(width: 140, alignment: .leading)
                         GeometryReader { geo in
                             ZStack(alignment: .leading) {
-                                RoundedRectangle(cornerRadius: 6)
-                                    .fill(Color(.systemGray5))
+                                RoundedRectangle(cornerRadius: LedgerMetric.radiusDot)
+                                    .fill(Color.ledgerInkRaised)
                                     .frame(maxWidth: .infinity)
-                                RoundedRectangle(cornerRadius: 6)
-                                    .fill(Color.green)
+                                RoundedRectangle(cornerRadius: LedgerMetric.radiusDot)
+                                    .fill(Color.ledgerBrass)
                                     .frame(width: max(8, geo.size.width * CGFloat(item.count) / CGFloat(maxCount)))
                             }
                         }
                         .frame(height: 24)
-                        Text("\(item.count)").font(.subheadline).foregroundColor(.secondary)
+                        Text("\(item.count)").font(.ledgerMono(13)).foregroundColor(.ledgerTextMid)
                             .frame(width: 36, alignment: .trailing)
                     }
                     .padding(.horizontal)
                 }
             }
-            .padding(.vertical, 12)
-            .background(Color(.systemBackground))
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.05), radius: 4)
+            .padding(.vertical, 4)
+            .ledgerTile()
             .padding(.horizontal)
         }
     }
 
     var recordsSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("My Records").font(.headline).padding(.horizontal)
+            Text("My Records")
+                .font(sectionLabelFont).tracking(1.2).textCase(.uppercase)
+                .foregroundColor(.ledgerTextLow)
+                .padding(.horizontal)
             VStack(spacing: 0) {
                 ForEach(speciesList, id: \.self) { species in
                     HStack {
-                        Text(species).font(.subheadline)
+                        Text(species).font(.subheadline).foregroundColor(.ledgerTextHi)
                         Spacer()
                         if let recordText = recordText(for: species) {
                             Text(recordText)
-                                .font(.subheadline).foregroundColor(.blue)
+                                .font(.ledgerDisplay(15)).foregroundColor(.ledgerBrass)
                         } else {
                             Text("No record yet")
-                                .font(.subheadline).foregroundColor(.secondary)
+                                .font(.subheadline).foregroundColor(.ledgerTextLow)
                         }
                     }
                     .padding(.horizontal)
                     .padding(.vertical, 10)
                     if species != speciesList.last {
-                        Divider().padding(.leading)
+                        Divider().overlay(Color.ledgerLine).padding(.leading)
                     }
                 }
             }
-            .background(Color(.systemBackground))
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.05), radius: 4)
+            .ledgerTile(padding: 0)
             .padding(.horizontal)
         }
     }
@@ -204,33 +211,34 @@ struct DashboardView: View {
 
     var methodsSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("My Favourite Method").font(.headline).padding(.horizontal)
+            Text("My Favourite Method")
+                .font(sectionLabelFont).tracking(1.2).textCase(.uppercase)
+                .foregroundColor(.ledgerTextLow)
+                .padding(.horizontal)
             VStack(spacing: 0) {
                 ForEach(speciesList, id: \.self) { species in
                     HStack {
-                        Text(species).font(.subheadline)
+                        Text(species).font(.subheadline).foregroundColor(.ledgerTextHi)
                             .frame(width: 130, alignment: .leading)
                         Spacer()
                         if let data = favouriteMethodData(for: species) {
                             Text(data.method)
-                                .font(.subheadline).foregroundColor(.blue)
+                                .font(.subheadline).foregroundColor(.ledgerBrass)
                             Text("· \(data.count) fish")
-                                .font(.subheadline).foregroundColor(.secondary)
+                                .font(.ledgerMono(12)).foregroundColor(.ledgerTextLow)
                         } else {
                             Text("No data yet")
-                                .font(.subheadline).foregroundColor(.secondary)
+                                .font(.subheadline).foregroundColor(.ledgerTextLow)
                         }
                     }
                     .padding(.horizontal)
                     .padding(.vertical, 10)
                     if species != speciesList.last {
-                        Divider().padding(.leading)
+                        Divider().overlay(Color.ledgerLine).padding(.leading)
                     }
                 }
             }
-            .background(Color(.systemBackground))
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.05), radius: 4)
+            .ledgerTile(padding: 0)
             .padding(.horizontal)
         }
     }
@@ -256,7 +264,7 @@ struct DashboardView: View {
                 }
                 .padding(.top)
             }
-            .background(Color(.systemGroupedBackground))
+            .ledgerScreenBackground()
             .navigationTitle("Dashboard")
         }
     }

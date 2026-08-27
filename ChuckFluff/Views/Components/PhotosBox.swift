@@ -21,7 +21,7 @@ struct PhotosBox: View {
                                             .resizable()
                                             .scaledToFill()
                                             .frame(width: 80, height: 80)
-                                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                                            .clipShape(RoundedRectangle(cornerRadius: LedgerMetric.radiusCard))
                                         Button(action: { photoData.remove(at: i) }) {
                                             Image(systemName: "xmark.circle.fill")
                                                 .foregroundColor(.white)
@@ -40,9 +40,9 @@ struct PhotosBox: View {
                              maxSelectionCount: 10,
                              matching: .images) {
                     HStack {
-                        Image(systemName: "plus.circle.fill").foregroundColor(.blue)
+                        Image(systemName: "plus.circle.fill").foregroundColor(.ledgerBrass)
                         Text(photoData.isEmpty ? "Add Photos" : "Add More Photos")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.ledgerBrass)
                         Spacer()
                     }
                 }

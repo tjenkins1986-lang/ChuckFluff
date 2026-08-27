@@ -8,27 +8,30 @@ struct SessionRowView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     if !session.sessionName.isEmpty {
-                        Text(session.sessionName).font(.headline)
+                        Text(session.sessionName).font(.headline).foregroundColor(.ledgerTextHi)
                     }
                     Text(session.locationName.isEmpty ? "Unknown Location" : session.locationName)
                         .font(session.sessionName.isEmpty ? .headline : .subheadline)
-                        .foregroundColor(session.sessionName.isEmpty ? .primary : .secondary)
+                        .foregroundColor(session.sessionName.isEmpty ? .ledgerTextHi : .ledgerTextMid)
                 }
                 Spacer()
-                Text(session.date, style: .date).font(.subheadline).foregroundColor(.secondary)
+                Text(session.date, style: .date)
+                    .font(.ledgerMono(12))
+                    .foregroundColor(.ledgerTextLow)
             }
             HStack(spacing: 16) {
                 Label("\(session.totalFish) fish", systemImage: "fish.fill")
-                    .font(.caption).foregroundColor(.blue)
+                    .font(.caption).foregroundColor(.ledgerTextMid)
                 Label(String(format: "%.1f lb", session.totalWeight), systemImage: "scalemass.fill")
-                    .font(.caption).foregroundColor(.green)
+                    .font(.caption).foregroundColor(.ledgerTextMid)
                 Label(session.weatherCondition, systemImage: "cloud.sun.fill")
-                    .font(.caption).foregroundColor(.orange)
+                    .font(.caption).foregroundColor(.ledgerTextMid)
             }
             if !session.notes.isEmpty {
-                Text(session.notes).font(.caption).foregroundColor(.secondary).lineLimit(1)
+                Text(session.notes).font(.caption).foregroundColor(.ledgerTextLow).lineLimit(1)
             }
         }
         .padding(.vertical, 4)
+        .listRowBackground(Color.ledgerInkSurface)
     }
 }

@@ -30,6 +30,7 @@ struct AddItemSheet: View {
                         .padding()
                 }
             }
+            .ledgerScreenBackground()
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

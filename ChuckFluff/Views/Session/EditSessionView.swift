@@ -102,21 +102,23 @@ struct EditSessionView: View {
                     .onTapGesture { focusedField = .locationName }
                 Button(action: { showMap = true }) {
                     HStack {
-                        Image(systemName: "map.fill").foregroundColor(.blue)
+                        Image(systemName: "map.fill").foregroundColor(.ledgerBrass)
                         Text(pinnedLatitude != nil ? "Pin set ✓ — tap to change" : "Drop a pin on the map")
+                            .foregroundColor(pinnedLatitude != nil ? .ledgerSage : .ledgerTextHi)
                         Spacer()
-                        Image(systemName: "chevron.right").foregroundColor(.secondary).font(.caption)
+                        Image(systemName: "chevron.right").foregroundColor(.ledgerTextLow).font(.caption)
                     }
                 }
                 .buttonStyle(.plain)
                 .padding(10)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
+                .background(Color.ledgerInkRaised)
+                .cornerRadius(LedgerMetric.radiusCard)
                 if let lat = pinnedLatitude, let lon = pinnedLongitude {
                     HStack {
-                        Image(systemName: "mappin.circle.fill").foregroundColor(.red)
+                        Image(systemName: "mappin.circle.fill").foregroundColor(.ledgerBrass)
                         Text("📍 \(lat, specifier: "%.4f"), \(lon, specifier: "%.4f")")
-                            .font(.caption).foregroundColor(.secondary)
+                            .font(.ledgerMono(12))
+                            .foregroundColor(.ledgerTextMid)
                         Spacer()
                     }
                 }
@@ -208,6 +210,7 @@ struct EditSessionView: View {
                     NotesBox(notes: $notes, showNoteSheet: $showNoteSheet)
                 }
             }
+            .ledgerScreenBackground()
             .onAppear { focusedField = nil }
             .navigationTitle("Edit Session")
             .navigationBarTitleDisplayMode(.inline)

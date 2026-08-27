@@ -14,16 +14,24 @@ struct MapSessionSummaryView: View {
         NavigationStack {
             Form {
                 if !session.sessionName.isEmpty {
-                    Section { Text(session.sessionName).font(.headline) }
+                    Section {
+                        Text(session.sessionName)
+                            .font(.ledgerDisplay(22))
+                            .foregroundColor(.ledgerTextHi)
+                    }
+                    .listRowBackground(Color.ledgerInkSurface)
                 }
                 SessionDetailsSection(session: session, showCoordinates: false)
                 SessionConditionsSection(session: session)
                 SessionGearSection(session: session)
                 SessionCatchesSection(session: session)
                 if !session.notes.isEmpty {
-                    Section("Notes") { Text(session.notes) }
+                    Section("Notes") { Text(session.notes).foregroundColor(.ledgerTextMid) }
+                        .listRowBackground(Color.ledgerInkSurface)
                 }
             }
+            .scrollContentBackground(.hidden)
+            .ledgerScreenBackground()
             .navigationTitle(navTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

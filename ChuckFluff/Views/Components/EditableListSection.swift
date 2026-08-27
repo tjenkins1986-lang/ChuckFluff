@@ -10,15 +10,25 @@ struct EditableListSection: View {
     let onDelete: (IndexSet) -> Void
     let onAddTapped: () -> Void
 
+    private var ledgerHeader: some View {
+        Text(header)
+            .font(.ledgerMono(10.5, weight: .medium))
+            .tracking(1.2)
+            .textCase(.uppercase)
+            .foregroundColor(.ledgerTextLow)
+    }
+
     var body: some View {
-        Section(header: Text(header), footer: Text(footer)) {
+        Section(header: ledgerHeader, footer: Text(footer).foregroundColor(.ledgerTextLow)) {
             ForEach(items, id: \.self) { item in
-                Text(item)
+                Text(item).foregroundColor(.ledgerTextHi)
             }
             .onDelete(perform: onDelete)
             Button(action: onAddTapped) {
                 Label(addButtonLabel, systemImage: "plus.circle.fill")
+                    .foregroundColor(.ledgerBrass)
             }
         }
+        .listRowBackground(Color.ledgerInkSurface)
     }
 }

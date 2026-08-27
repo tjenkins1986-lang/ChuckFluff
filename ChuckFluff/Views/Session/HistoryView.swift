@@ -44,8 +44,10 @@ struct HistoryView: View {
                         }
                         .onDelete(perform: deleteSessions)
                     }
+                    .scrollContentBackground(.hidden)
                 }
             }
+            .ledgerScreenBackground()
             .navigationTitle("History")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

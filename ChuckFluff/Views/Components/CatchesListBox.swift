@@ -11,7 +11,7 @@ struct CatchesListBox: View {
             VStack(spacing: 8) {
                 if catches.isEmpty {
                     HStack {
-                        Text(emptyMessage).foregroundColor(.secondary)
+                        Text(emptyMessage).foregroundColor(.ledgerTextLow)
                         Spacer()
                     }
                     .padding(.top, 4)
@@ -19,28 +19,28 @@ struct CatchesListBox: View {
                     ForEach(catches.indices, id: \.self) { i in
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(catches[i].species).bold()
+                                Text(catches[i].species).bold().foregroundColor(.ledgerTextHi)
                                 Text(catchSummary(for: catches[i]))
-                                    .font(.caption).foregroundColor(.secondary)
+                                    .font(.ledgerMono(12)).foregroundColor(.ledgerTextMid)
                                 if !catches[i].method.isEmpty {
                                     Text("Method: \(catches[i].method)")
-                                        .font(.caption).foregroundColor(.secondary)
+                                        .font(.caption).foregroundColor(.ledgerTextMid)
                                 }
                             }
                             Spacer()
                             Button(action: { catches.remove(at: i) }) {
-                                Image(systemName: "trash").foregroundColor(.red)
+                                Image(systemName: "trash").foregroundColor(.ledgerClay)
                             }
                         }
                         .padding(.vertical, 4)
-                        if i < catches.count - 1 { Divider() }
+                        if i < catches.count - 1 { Divider().overlay(Color.ledgerLine) }
                     }
                 }
-                Divider()
+                Divider().overlay(Color.ledgerLine)
                 Button(action: { showAddCatch = true }) {
                     HStack {
-                        Image(systemName: "plus.circle.fill").foregroundColor(.blue)
-                        Text("Add Catch").foregroundColor(.blue)
+                        Image(systemName: "plus.circle.fill").foregroundColor(.ledgerBrass)
+                        Text("Add Catch").foregroundColor(.ledgerBrass)
                         Spacer()
                     }
                 }
